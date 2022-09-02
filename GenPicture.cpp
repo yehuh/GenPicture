@@ -202,8 +202,11 @@ int main() {
             color = color * (1. / samplesCount) + 14. / 241;
             Vec o = color + 1;
             color = Vec(color.x / o.x, color.y / o.y, color.z / o.z) * 255;
+            int color_x = (int)color.x;
+            int color_y = (int)color.y;
+            int color_z = (int)color.z;
             //printf("%c%c%c", (int)color.x, (int)color.y, (int)color.z);
-            myfile << (int)color.x << (int)color.y << (int)color.z;
+            myfile << (char)color_x << (char)color_y << (char)color_z;
         }
         std::cout << "Row " << y << " is done!!" << std::endl;
     }
