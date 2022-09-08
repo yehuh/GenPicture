@@ -6,6 +6,8 @@
 #include <format>
 #include<iomanip>
 
+#define FILE_NAME "HaHa.ppm"
+
 struct Vec {
     float x, y, z;
 
@@ -185,11 +187,27 @@ int main() {
         goal.z * left.x - goal.x * left.z,
         goal.x * left.y - goal.y * left.x);
     
-    std::ofstream myfile;
+    
+   /* std::ofstream myfile;
     myfile.open("pix.ppm");
-    myfile << "P6 "<< std::setprecision(1) << w << " " << std::setprecision(1) << h <<" " << 255 << " ";
-    
-    
+    myfile << "P6 "<< std::setprecision(1) << w << " " << std::setprecision(1) << h <<" " << 255 << " ";*/
+
+    size_t write_num;
+    FILE* myFile_ptr;
+
+    //myFile_ptr = fopen(FILE_NAME, "w");
+
+    errno_t err = fopen_s(&myFile_ptr, FILE_NAME, "w");
+    if (err != 0)
+    {
+        printf("File Gen Failed!!");
+        return -1;
+    }
+
+    char str_buff[80];
+    int wr_cnt = sprintf_s(str_buff, "P6 %d %d 255 ", w, h);
+    fwrite(str_buff, sizeof(int), wr_cnt, myFile_ptr);
+
     //printf("P6 %d %d 255 ", w, h);
     for (int y = h; y--;)
     {
@@ -206,9 +224,14 @@ int main() {
             int color_y = (int)color.y;
             int color_z = (int)color.z;
             //printf("%c%c%c", (int)color.x, (int)color.y, (int)color.z);
-            myfile << (char)color_x << (char)color_y << (char)color_z;
+            //myfile << (char)color_x << (char)color_y << (char)color_z;
+            wr_cnt = sprintf_s(str_buff, "%c%c%c", (int)color.x, (int)color.y, (int)color.z);
+            fwrite(str_buff, sizeof(int), wr_cnt, myFile_ptr);
         }
-        std::cout << "Row " << y << " is done!!" << std::endl;
+        //std::cout << "Row " << y << " is done!!" << std::endl;
+        printf("Row %d is done!!\n\r", y);
     }
-    myfile.close();
+    //myfile.close();
+    printf("ppm File is done");
+    fclose(myFile_ptr);
 }// Andrew Kensler
