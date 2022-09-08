@@ -1,11 +1,12 @@
-﻿#include <stdlib.h> // card > pixar.ppm
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <stdlib.h> // card > pixar.ppm
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
 #include <fstream>
-#include<iomanip>
-
+#include <iomanip>
 #define FILE_NAME "HaHa.ppm"
+
 
 struct Vec {
     float x, y, z;
@@ -196,15 +197,18 @@ int main() {
 
     //myFile_ptr = fopen(FILE_NAME, "w");
 
-    errno_t err = fopen_s(&myFile_ptr, FILE_NAME, "w");
-    if (err != 0)
+    myFile_ptr = fopen(FILE_NAME, "w");
+    if (myFile_ptr == nullptr)
     {
         printf("File Gen Failed!!");
         return -1;
     }
 
     char str_buff[80];
+    const int SPRINT_LIMIT = 80;
+
     int wr_cnt = sprintf_s(str_buff, "P6 %d %d 255 ", w, h);
+    wr_cnt = snprintf(str_buff, SPRINT_LIMIT, "P6 %d %d 255 ", w, h);
     fwrite(str_buff, sizeof(int), wr_cnt, myFile_ptr);
 
     //printf("P6 %d %d 255 ", w, h);
@@ -224,7 +228,7 @@ int main() {
             int color_z = (int)color.z;
             //printf("%c%c%c", (int)color.x, (int)color.y, (int)color.z);
             //myfile << (char)color_x << (char)color_y << (char)color_z;
-            wr_cnt = sprintf_s(str_buff, "%c%c%c", (int)color.x, (int)color.y, (int)color.z);
+            wr_cnt = snprintf(str_buff, SPRINT_LIMIT, "%c%c%c", (int)color.x, (int)color.y, (int)color.z);
             fwrite(str_buff, sizeof(int), wr_cnt, myFile_ptr);
         }
         //std::cout << "Row " << y << " is done!!" << std::endl;
