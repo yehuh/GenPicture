@@ -3,7 +3,6 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
-#include <format>
 #include<iomanip>
 
 #define FILE_NAME "HaHa.ppm"
