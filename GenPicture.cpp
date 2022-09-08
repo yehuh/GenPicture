@@ -232,7 +232,10 @@ int main() {
             fwrite(str_buff, sizeof(int), wr_cnt, myFile_ptr);
         }
         //std::cout << "Row " << y << " is done!!" << std::endl;
-        printf("Row %d is done!!\n\r", y);
+        if (y % 60 == 0)
+        {
+            printf("Row %d is done!!\n\r", y);
+        }
     }
     //myfile.close();
     printf("ppm File is done");
