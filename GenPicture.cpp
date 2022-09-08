@@ -207,8 +207,8 @@ int main() {
     char str_buff[80];
     const int SPRINT_LIMIT = 80;
 
-    int wr_cnt = sprintf_s(str_buff, "P6 %d %d 255 ", w, h);
-    wr_cnt = snprintf(str_buff, SPRINT_LIMIT, "P6 %d %d 255 ", w, h);
+    //int wr_cnt = sprintf_s(str_buff, "P6 %d %d 255 ", w, h);
+    int wr_cnt = snprintf(str_buff, SPRINT_LIMIT, "P6 %d %d 255 ", w, h);
     fwrite(str_buff, sizeof(int), wr_cnt, myFile_ptr);
 
     //printf("P6 %d %d 255 ", w, h);
